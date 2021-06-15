@@ -1,0 +1,43 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    vector<vector<int>> levelOrder(TreeNode* root) {
+        //创建返回数组
+        vector<vector<int>> ans;
+        //创建队列
+        queue<TreeNode*> que;
+        //若空
+        if(root == nullptr) return ans;
+        //根节点压入队列
+        que.push(root);
+        //若队列不为空，循环
+        while(!que.empty()){
+            //当前队列长度
+            int queLen = que.size();
+            ans.push_back(vector<int>());
+            //循环遍历当前层所有节点
+            for(int i = 0; i < queLen; ++i){
+                //选择节点
+                auto node = que.front();
+                //选择的当前节点弹出队列
+                que.pop();
+                //将选择的当前节点的值压入数组
+                ans.back().push_back(node->val);
+                //寻找当前节点的下一层节点压入队列
+                if(node->left) que.push(node->left);
+                if(node->right) que.push(node->right);
+            }
+        }
+        return ans;
+    }
+};
